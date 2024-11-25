@@ -11,6 +11,8 @@ import android.view.OrientationEventListener;
 import org.webrtc.ScreenCapturerAndroid;
 import org.webrtc.VideoCapturer;
 
+import java.util.Objects;
+
 public class ScreenCaptureController extends AbstractVideoCaptureController {
     /**
      * The {@link Log} tag with which {@code ScreenCaptureController} is to log.
@@ -35,10 +37,13 @@ public class ScreenCaptureController extends AbstractVideoCaptureController {
                     DisplayMetrics displayMetrics = DisplayUtils.getDisplayMetrics((Activity) context);
                     int width = displayMetrics.widthPixels;
                     int height = displayMetrics.heightPixels;
-                    videoCapturer.changeCaptureFormat(width, height, DEFAULT_FPS);
-                } catch (Exception ex) {
+
+                    // Commenting this to avoid resetting of VideoCapture when the phone is orientation listener
+                    // videoCapturer.changeCaptureFormat(width, height, DEFAULT_FPS);
+                    } catch (Exception ex) {
                     // We ignore exceptions here. The video capturer runs on its own
                     // thread and we cannot synchronize with it.
+                    Log.e(TAG, "Media Projecion Security Exception" + Objects.requireNonNull(ex.getMessage()));
                 }
             }
         };
